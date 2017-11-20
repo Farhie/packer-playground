@@ -1,4 +1,10 @@
 ---
+- name: Get the public IP address of the machine under build form AWS meta-data service
+  uri:
+    url: http://169.254.169.254/latest/meta-data/public-ipv4
+    return_content: yes
+  register: build_machine_public_ip
+
 - name: Run inspec tests on built AMI
-  command: "inspec exec ../spec/test.rb -t ssh://{{ ansible_user }}@{{ webpage.content }} -i {{ ansible_private_key_file }}"
+  command: "inspec exec ../spec/test.rb -t ssh://{{ ansible_user }}@{{ build_machine_public_ip.content }} -i {{ ansible_private_key_file }}"
   delegate_to: localhost
