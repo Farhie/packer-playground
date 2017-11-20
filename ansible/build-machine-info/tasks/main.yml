@@ -1,0 +1,40 @@
+---
+- name: Save IP address of the machine under build
+  command: curl http://169.254.169.254/latest/meta-data/local-ipv4
+  register: instance_local_ip
+
+- name: Save IP address of the machine under build
+  uri:
+    url: http://169.254.169.254/latest/meta-data/public-ipv4
+    return_content: yes
+  register: webpage
+
+- name: Save machines IP
+  shell: echo "TARGET_HOST={{ webpage.content }}" > /tmp/machines-ip.txt
+
+- name: Display all variables/facts known for a host
+  debug:
+    var: hostvars[inventory_hostname]
+    verbosity: 4
+
+- name: Connection configuration
+  file:
+    path: /tmp/ssh-connection.txt
+    state: touch
+
+- lineinfile:
+    path: /tmp/ssh-connection.txt
+    line: "TARGET_HOST={{ webpage.content }}"
+
+- lineinfile:
+    path: /tmp/ssh-connection.txt
+    line: "SSH_USER={{ ansible_user }}"
+
+- name: Fetch connection details for machine under build
+  fetch:
+    src: /tmp/ssh-connection.txt
+    dest: ../ssh-connection.txt
+    flat: yes
+
+- name: Echo things safely...
+  command: "echo \"this {{ ansible_user }} this {{ ansible_private_key_file }} and {{ ansible_host }}\""

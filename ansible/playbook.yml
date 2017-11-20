@@ -1,0 +1,5 @@
+- name: A demo playbook for configuring an Amazon Linux image with Packer
+  hosts: all
+  roles:
+   - { role: build-machine-info }
+   - { role: inspec-tests }

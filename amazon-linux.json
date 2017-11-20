@@ -1,0 +1,35 @@
+{
+  "provisioners": [
+    {
+      "type": "ansible",
+      "playbook_file": "./ansible/playbook.yml",
+      "extra_arguments": [
+        "-vvvv"
+      ],
+      "user": "ec2user",
+      "ansible_env_vars": [
+        "ANSIBLE_HOST_KEY_CHECKING=False"
+      ]
+    },
+    {
+      "type": "shell",
+      "inline": [
+        "curl http://169.254.169.254/latest/meta-data/local-ipv4"
+      ]
+    },
+    {
+      "type": "shell-local",
+      "command": "source ssh-connection.txt && rake spec"
+    }
+  ],
+  "builders": [
+    {
+      "type": "amazon-ebs",
+      "region": "us-west-1",
+      "source_ami": "ami-1a033c7a",
+      "instance_type": "t2.micro",
+      "ssh_username": "ec2-user",
+      "ami_name": "packer-example {{timestamp | clean_ami_name}}"
+    }
+  ]
+}

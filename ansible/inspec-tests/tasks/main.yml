@@ -1,0 +1,4 @@
+---
+- name: Run inspec tests on built AMI
+  command: "inspec exec ../spec/test.rb -t ssh://{{ ansible_user }}@{{ webpage.content }} -i {{ ansible_private_key_file }}"
+  delegate_to: localhost
