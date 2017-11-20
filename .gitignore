@@ -1,2 +1,7 @@
+
+### Ansible ###
+*.retry
+
+### Other ###
 ssh-connection.txt
 build.log
