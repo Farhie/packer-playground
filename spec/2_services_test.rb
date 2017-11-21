@@ -1,4 +1,4 @@
-control "cis-2-1-1" do
+control "cis-2.1.1" do
   impact 1.0
   title "Ensure chargen services are not enabled (Scored)"
   desc "chargen is a network service that responds with 0

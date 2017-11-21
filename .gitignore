@@ -9,3 +9,4 @@ ssh-connection.txt
 build.log
 
 instance-information
+temporary_key.pem

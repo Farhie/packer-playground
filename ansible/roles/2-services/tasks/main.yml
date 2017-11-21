@@ -1,0 +1,14 @@
+---
+- name: 2.1.1 Ensure chargen services are not enabled (Scored)
+  service:
+    name: "{{ item }}"
+    state: stopped
+    enabled: no
+  register: command_result
+  failed_when: "command_result|failed and ('Could not find the requested service' not in command_result.msg)"
+  with_items:
+    - chargen-dgram
+    - chargen-stream
+  tags:
+    - scored
+    - section2.1

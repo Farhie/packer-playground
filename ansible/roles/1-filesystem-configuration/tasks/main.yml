@@ -1,0 +1,42 @@
+---
+- name: Create CIS config for modprobe
+  file:
+    path: /etc/modprobe.d/CIS.conf
+    state: touch
+    owner: root
+    group: root
+    mode: 0600
+  become: true
+  tags:
+    - notscored
+    - section1.1
+
+- name: 1.1.1.1 Ensure mounting of cramfs filesystems is disabled (Scored)
+  lineinfile:
+    path: /etc/modprobe.d/CIS.conf
+    line: 'install cramfs /bin/true'
+    state: present
+  become: true
+  tags:
+    - scored
+    - section1.1
+
+- name: 1.1.1.2 Ensure mounting of freevxfs filesystems is disabled (Scored)
+  lineinfile:
+    path: /etc/modprobe.d/CIS.conf
+    line: 'install freevxfs /bin/true'
+    state: present
+  become: true
+  tags:
+    - scored
+    - section1.1
+
+- name: 1.1.1.3 Ensure mounting of jffs2 filesystems is disabled (Scored)
+  lineinfile:
+    path: /etc/modprobe.d/CIS.conf
+    line: 'install jffs2 /bin/true'
+    state: present
+  become: true
+  tags:
+    - scored
+    - section1.1
