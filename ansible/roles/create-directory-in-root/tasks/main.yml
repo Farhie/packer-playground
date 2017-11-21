@@ -1,0 +1,6 @@
+---
+- name: Create directory in root
+  file:
+    path: /this-test-directory-in-root
+    state: directory
+  become: true
