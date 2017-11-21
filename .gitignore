@@ -1,3 +1,5 @@
+### inspec ###
+inspec.lock
 
 ### Ansible ###
 *.retry
