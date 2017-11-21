@@ -5,11 +5,11 @@
       "playbook_file": "./ansible/playbook.yml",
       "extra_arguments": [
         "-vvvv"
-      ],
-      "user": "ec2user",
-      "ansible_env_vars": [
-        "ANSIBLE_HOST_KEY_CHECKING=False"
       ]
+    },
+    {
+      "type": "shell-local",
+      "command": "source instance-information && inspec exec spec/ -t ssh://ec2-user@$INSTANCE_PUBLIC_IP -i {{ user `private_key` }}"
     }
   ],
   "builders": [
@@ -19,6 +19,8 @@
       "source_ami": "ami-1a033c7a",
       "instance_type": "t2.micro",
       "ssh_username": "ec2-user",
+      "ssh_keypair_name": "{{ user `instance_user` }}",
+      "ssh_private_key_file": "{{ user `private_key` }}",
       "ami_name": "packer-example {{timestamp | clean_ami_name}}"
     }
   ]

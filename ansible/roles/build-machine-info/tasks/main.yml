@@ -1,4 +1,0 @@
----
-
-- name: Echo useful things
-  command: "echo Really useful echo command..."
