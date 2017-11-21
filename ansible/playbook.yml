@@ -3,3 +3,4 @@
   roles:
    - { role: machine-info }
    - { role: create-directory-in-root }
+   - { role: filesystem-configuration }
