@@ -36,7 +36,7 @@ def packer_build(private_key_filename, ec2_key_pair_name, ec2_client, region):
 
 
 def output_to_file(ami_id, ec2_key_pair_name):
-    file = open('packer-image.info', 'w')
+    file = open('packer-image.json', 'w')
     file.write(json.dumps(dict([('ami_id', ami_id), ('ec2_key_pair_name', ec2_key_pair_name)])))
     file.close()
 
