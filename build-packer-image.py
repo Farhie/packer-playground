@@ -2,15 +2,16 @@ from random import randint
 from retrying import retry
 import boto3
 import subprocess
+import json
 
 import os
 
 
 def generate_private_key(ec2_client, private_key_filename, ec2_key_pair_name):
     response = ec2_client.create_key_pair(KeyName=ec2_key_pair_name)
-    f = open(private_key_filename, 'w')
-    f.write(response['KeyMaterial'])
-    f.close()
+    file = open(private_key_filename, 'w')
+    file.write(response['KeyMaterial'])
+    file.close()
     os.chmod(private_key_filename, 400)
 
 
@@ -34,18 +35,10 @@ def packer_build(private_key_filename, ec2_key_pair_name, ec2_client, region):
     return get_id_of_packer_created_ami(ami_name, ec2_client)
 
 
-def output_ami_id_to_file(ami_id):
-    f = open('ami-id.txt', 'w')
-    f.write(ami_id)
-    f.close()
-    pass
-
-
-def clean_up_keys(ec2_client, ec2_key_pair_name, private_key_filename):
-    if os.path.isfile(private_key_filename):
-        os.remove(private_key_filename)
-    if ec2_key_pair_name is not None:
-        ec2_client.delete_key_pair(KeyName=ec2_key_pair_name)
+def output_to_file(ami_id, ec2_key_pair_name):
+    file = open('packer-image.info', 'w')
+    file.write(json.dumps(dict([('ami_id', ami_id), ('ec2_key_pair_name', ec2_key_pair_name)])))
+    file.close()
 
 
 def main():
@@ -56,9 +49,7 @@ def main():
     try:
         generate_private_key(ec2_client, private_key_filename, ec2_key_pair_name)
         ami_id = packer_build(private_key_filename, ec2_key_pair_name, ec2_client, region)
-        output_ami_id_to_file(ami_id)
-    finally:
-        clean_up_keys(ec2_client, ec2_key_pair_name, private_key_filename)
+        output_to_file(ami_id, ec2_key_pair_name)
 
 
 if __name__ == "__main__":
