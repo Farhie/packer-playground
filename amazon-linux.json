@@ -2,19 +2,19 @@
   "provisioners": [
     {
       "type": "ansible",
-      "playbook_file": "./ansible/playbook.yml"
+      "playbook_file": "./packer-ansible/playbook.yml"
     }
   ],
   "builders": [
     {
       "type": "amazon-ebs",
-      "region": "us-west-1",
+      "region": "{{ user `region` }}",
       "source_ami": "ami-1a033c7a",
       "instance_type": "t2.micro",
       "ssh_username": "ec2-user",
       "ssh_keypair_name": "{{ user `ec2_key_pair_name` }}",
       "ssh_private_key_file": "{{ user `private_key_location` }}",
-      "ami_name": "packer-example {{timestamp | clean_ami_name}}"
+      "ami_name": "{{ user `ami_name` }}"
     }
   ]
 }
