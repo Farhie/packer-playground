@@ -10,3 +10,4 @@ build.log
 
 instance-information
 temporary_key.pem
+packer-image.json

@@ -12,8 +12,6 @@
       "source_ami": "ami-1a033c7a",
       "instance_type": "t2.micro",
       "ssh_username": "ec2-user",
-      "ssh_keypair_name": "{{ user `ec2_key_pair_name` }}",
-      "ssh_private_key_file": "{{ user `private_key_location` }}",
       "ami_name": "{{ user `ami_name` }}"
     }
   ]
