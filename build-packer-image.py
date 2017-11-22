@@ -46,10 +46,9 @@ def main():
     private_key_filename = 'temporary-key-{}.pem'.format(randint(10000, 1000000000000000))
     ec2_key_pair_name = 'packer-key-pair-{}'.format(randint(10000, 1000000000000000))
     region = "us-west-1"
-    try:
-        generate_private_key(ec2_client, private_key_filename, ec2_key_pair_name)
-        ami_id = packer_build(private_key_filename, ec2_key_pair_name, ec2_client, region)
-        output_to_file(ami_id, ec2_key_pair_name)
+    generate_private_key(ec2_client, private_key_filename, ec2_key_pair_name)
+    ami_id = packer_build(private_key_filename, ec2_key_pair_name, ec2_client, region)
+    output_to_file(ami_id, ec2_key_pair_name)
 
 
 if __name__ == "__main__":
