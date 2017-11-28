@@ -56,7 +56,7 @@ def wait_for_status_checks_to_pass(ec2, instance):
         statuses = ec2.describe_instance_status(InstanceIds=[instance.instance_id], IncludeAllInstances=True)
         status = statuses['InstanceStatuses'][0]
         if status['InstanceStatus']['Status'] == 'ok' and status['SystemStatus']['Status'] == 'ok':
-            print('InstanceStatuses are ok. sshd will be available.')
+            print("Instance: {} running, sshd should be running.".format(instance.instance_id))
             break
         print('InstanceStatus: {}, SystemStatus: {}. Waiting for InstanceStatuses to be OK'
               .format(status['InstanceStatus']['Status'], status['SystemStatus']['Status']))
@@ -81,7 +81,6 @@ def main():
                                                  SecurityGroupIds=[security_group_id],
                                                  KeyName=ec2_key_pair_name)[0]
         wait_for_status_checks_to_pass(ec2, instance)
-        print("Instance: {} running. sshd should not be running.".format(instance.instance_id))
         instance.reload()
         print("Public IP address: {} ".format(instance.public_ip_address))
 
