@@ -8,8 +8,8 @@ from botocore.exceptions import ClientError
 
 
 def generate_private_key(ec2_client):
-    private_key_filename = 'temporary-key-{}.pem'.format(randint(10000, 1000000000000000))
-    ec2_key_pair_name = 'packer-key-pair-{}'.format(randint(10000, 1000000000000000))
+    private_key_filename = 'temporary-key-{}.pem'.format(randint(10000, 10000000))
+    ec2_key_pair_name = 'packer-key-pair-{}'.format(randint(10000, 10000000))
     response = ec2_client.create_key_pair(KeyName=ec2_key_pair_name)
     file = open(private_key_filename, 'w')
     file.write(response['KeyMaterial'])
@@ -30,7 +30,7 @@ def ssh_ingress_security_group(ec2_client):
     vpc_id = response.get('Vpcs', [{}])[0].get('VpcId', '')
 
     try:
-        group_name = 'allow_ssh_ingress_for_inspec_testing'
+        group_name = 'allow_ssh_ingress_for_inspec_testing_{}'.format(randint(10000, 10000000))
         response = ec2_client.create_security_group(GroupName=group_name,
                                                     Description='Inspec requires SSH access to run tests',
                                                     VpcId=vpc_id)
