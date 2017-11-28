@@ -24,14 +24,14 @@ the creation of CIS compliant Amazon Linux Machines Images (AMIs).
 
 
 ### Creating an AMI
-* To build an image run `python3 build-packer-image.py`
+* To build an image run `python3 create-ami.py`
 * Packer will bring up an EC2 instance with the AMI specified in the script
 * Then the Ansible contained in `packer-ansible` will be run against the instance
 * A snapshot is then taken
 * The AMI ID is outputted to a file called `packer-image.json`
 
 ### Testing an AMI
-* To test the created image run `python3 run-inspec-tests.py`
+* To test the created image run `python3 test-ami.py`
 * Creates a security group that allows SSH ingress
 * Brings up a new instance with the AMI ID found in `packer-image.json` and a temporary key pair
 * Runs the Inspec tests
