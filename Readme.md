@@ -36,3 +36,7 @@ the creation of CIS compliant Amazon Linux Machines Images (AMIs).
 * Brings up a new instance with the AMI ID found in `packer-image.json` and a temporary key pair
 * Runs the Inspec tests
 * Cleans up the instance, security group and keypair.
+
+### Limitations / Low Hanging Fruit
+* Region currently hardcoded to `us-west-1`
+* Base AMI hardcoded within python script `create-ami.py` (parameterised in `amazon-linux.json`)
