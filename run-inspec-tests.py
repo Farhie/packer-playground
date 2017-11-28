@@ -56,7 +56,10 @@ def wait_for_status_checks_to_pass(ec2, instance):
         statuses = ec2.describe_instance_status(InstanceIds=[instance.instance_id], IncludeAllInstances=True)
         status = statuses['InstanceStatuses'][0]
         if status['InstanceStatus']['Status'] == 'ok' and status['SystemStatus']['Status'] == 'ok':
+            print('InstanceStatuses are ok. sshd will be available.')
             break
+        print('InstanceStatus: {}, SystemStatus: {}. Waiting for InstanceStatuses to be OK'
+              .format(status['InstanceStatus']['Status'], status['SystemStatus']['Status']))
         time.sleep(5)
 
 
@@ -86,14 +89,19 @@ def main():
                         '-t', 'ssh://ec2-user@{}'.format(instance.public_ip_address),
                         '-i', private_key_filename],
                        check=True)
+        print('Tests completed. Cleaning up.')
     finally:
         if ec2_key_pair_name is not None:
             clean_up_keys(ec2, ec2_key_pair_name, private_key_filename)
+            print('Keypair used for testing deleted.')
         if instance is not None:
+            print('Terminating instance used for testing.')
             instance.terminate()
             instance.wait_until_terminated()
+            print('Terminated.')
         if security_group_id is not None:
             ec2.delete_security_group(GroupId=security_group_id, GroupName=security_group_name)
+            print('Deleted security group that allows ssh ingress for Inspec.')
 
 
 if __name__ == "__main__":

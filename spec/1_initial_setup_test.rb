@@ -28,10 +28,6 @@ control "cis-1.1.1.3" do
   desc "The jffs2 (journaling flash filesystem 2) filesystem type is a
         log-structured filesystem used in flash memory devices."
 
-  describe command('modprobe -n -v jffs2') do
-    its('stdout') { should match 'install /bin/true' }
-  end
-
   describe command('lsmod | grep jffs2') do
     its('stdout') { should match '' }
   end
