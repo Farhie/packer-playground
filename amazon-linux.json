@@ -9,7 +9,7 @@
     {
       "type": "amazon-ebs",
       "region": "{{ user `region` }}",
-      "source_ami": "ami-1a033c7a",
+      "source_ami": "{{ user `base_ami_id` }}",
       "instance_type": "t2.micro",
       "ssh_username": "ec2-user",
       "ami_name": "{{ user `ami_name` }}"

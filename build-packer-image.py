@@ -16,11 +16,12 @@ def get_id_of_packer_created_ami(ami_name, ec2_client):
     return images['Images'][0]['ImageId']
 
 
-def packer_build(ec2_client, region):
+def packer_build(ec2_client, region, base_ami_id):
     ami_name = "packer-amazon-linux-{}".format(randint(10000, 1000000000000000))
     subprocess.run(['packer', 'build',
                     '-var', 'ami_name={}'.format(ami_name),
                     '-var', 'region={}'.format(region),
+                    '-var', 'base_ami_id={}'.format(base_ami_id),
                     'amazon-linux.json'], check=True)
     return get_id_of_packer_created_ami(ami_name, ec2_client)
 
@@ -34,7 +35,8 @@ def output_to_json_file(ami_id):
 def main():
     ec2_client = boto3.client('ec2')
     region = "us-west-1"
-    ami_id = packer_build(ec2_client, region)
+    base_ami_id = "ami-1a033c7a"
+    ami_id = packer_build(ec2_client, region, base_ami_id)
     output_to_json_file(ami_id)
 
 
