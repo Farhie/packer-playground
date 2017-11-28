@@ -1,8 +1,6 @@
 - name: A demo playbook for configuring Amazon Linux
   hosts: all
   roles:
-   - { role: machine-info }
-   - { role: create-directory-in-root }
    - { role: 1-filesystem-configuration }
    - { role: 2-services }
    - { role: 3-network-configuration }
