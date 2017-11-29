@@ -1,0 +1,9 @@
+---
+- name: 5.1.1 Ensure cron daemon is enabled (Scored)
+  service:
+    name: crond
+    enabled: started
+  become: true
+  tags:
+    - scored
+    - section5.1
