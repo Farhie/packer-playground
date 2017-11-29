@@ -6,3 +6,4 @@
    - { role: 3-network-configuration }
    - { role: 4-logging-auditing }
    - { role: 5-access-authentication-authorisation }
+   - { role: 6-system-maintenance }

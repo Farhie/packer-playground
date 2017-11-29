@@ -1,0 +1,12 @@
+---
+- name: 6.1.2 Ensure permissions on /etc/passwd are configured (Scored)
+  file:
+    path: /etc/passwd
+    owner: root
+    group: root
+    mode: 0644
+  become: true
+  tags:
+    - scored
+    - section6.1
+
