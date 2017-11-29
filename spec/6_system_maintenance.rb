@@ -6,7 +6,7 @@ control "cis-6.1" do
 
   describe file('/etc/passwd') do
     it { should be_owned_by 'root' }
-    it { should be_setuid }
-    it { should be_setgid }
+    it { should be_grouped_into 'root' }
+    its('mode') { should cmp '0644' }
   end
 end

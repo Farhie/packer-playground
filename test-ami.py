@@ -86,7 +86,7 @@ def main():
 
         subprocess.run(['inspec', 'exec', 'spec/',
                         '-t', 'ssh://ec2-user@{}'.format(instance.public_ip_address),
-                        '-i', private_key_filename],
+                        '-i', private_key_filename, '--sudo'],
                        check=True)
         print('Tests completed. Cleaning up.')
     finally:
