@@ -1,0 +1,21 @@
+---
+- name: 4.1.1.1 Ensure audit log storage size is configured (Not Scored)
+  lineinfile:
+    path: /etc/audit/auditd.conf
+    regexp: '^max_log_file ='
+    line: 'max_log_file = 50'
+    state: present
+  become: true
+  tags:
+    - notscored
+    - section4.1
+
+# Place all CIS 4.1.X changes above here
+- name: Reload auditd configuration after all changes
+  service:
+    name: auditd
+    state: reloaded
+  become: true
+  tags:
+    - notscored
+    - section4.1

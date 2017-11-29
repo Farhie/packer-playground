@@ -4,3 +4,4 @@
    - { role: 1-filesystem-configuration }
    - { role: 2-services }
    - { role: 3-network-configuration }
+   - { role: 4-logging-auditing }
