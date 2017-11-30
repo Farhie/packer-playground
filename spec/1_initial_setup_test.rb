@@ -32,3 +32,15 @@ control "cis-1.1.1.3" do
     its('stdout') { should match '' }
   end
 end
+
+control "cis-1.3.1" do
+  impact 1.0
+  title "Ensure AIDE is installed (Scored)"
+  desc "AIDE takes a snapshot of filesystem state including modification times,
+        permissions, and file hashes which can then be used to compare against the
+        current state of the filesystem to detect modifications to the system."
+
+  describe command('rpm -q aide') do
+    its('stdout') { should match 'aide-.+' }
+  end
+end
